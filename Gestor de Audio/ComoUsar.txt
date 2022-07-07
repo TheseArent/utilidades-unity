@@ -1,0 +1,54 @@
+Como usar Sound =>
+
+--->Prepara tus archivos
+
+1.Crea una carpeta con el nombre "Resources" , debe ser ese nombre exacto
+
+2.Coloca tus archivos de audio dentro de la carpeta Resources , recuerda ponerles un nombre facil de identificar
+
+3.Coloca el script Song dentro de un objeto vacio
+
+El script tiene una auto-referencia estatica por lo que podras utilizarlo desde
+cualquiera de tus script sin necesidad de obtenerlo como componente , solo llama a la 
+clase Sound
+
+--->Ejecuta Audios
+
+1.Para activar un sonido utiliza Sound.manager.Play(string clipPath ,float volume ,bool loop);
+
+-clipPath:
+En clip path debes indicar el nombre del archivo de audio que deseas ejecutar , por ejemplo : 
+	Sound.manager.Play("sonidoPistola");
+
+Puedes crear subcarpetas dentro de Resources si necesitas organizar tus activos de audio , de ser asi 
+recuerda indicar el camino , por ejemplo : 
+	Sound.manager.Play("NombreDeCarpeta/sonidoPistola");
+
+-volume:
+Indica el volumen del sonido(en 1f por defecto)
+
+-loop:
+Indica si el audio estara en modo loop (en falso por defecto)
+
+
+
+
+--->Pausa Audios
+
+1.Para pausar un audio utiliza Sound.manager.Pause(string clipPath);
+
+-clipPath:
+En clip path debes indicar el nombre del archivo de audio que deseas pausar, por ejemplo : 
+	Sound.manager.Pause("sonidoPistola");
+
+
+--Informacion Extra: 
+
+-Play:
+Como funciona? el script se encarga de buscar dentro de la carpeta resources , el archivo de audio con
+el camino indicado (en la llamada no es necesario indicar extenciones de tipo de archivo como .ogg , mp4 , etc.)
+Si encuentra el archivo , verifica todos los componentes de audio que tengamos , si el audio en cuestion ya esta referenciado
+dentro de un audio source lo reutilizamos , de no ser asi crearemos un audio source nuevo para usarlo con el sonido en cuestion
+-Pause:
+Como funciona? el script se encarga de buscar dentro de nuestros si el audio esta en ejecucion , de ser asi lo 
+pausaremos , en caso contrario se enviara un mensaje de advertencia
