@@ -1,0 +1,50 @@
+Como usar Pooling =>
+
+Imagina la siguiente situacion , tienes un juego donde el personaje puede disparar
+muchas balas por segundo , lo usual seria instancias las balas y destruirlas cuando 
+choquen con algo.
+Crear y destruir objetos todo el tiempo consume muchos recursos , en especial en dispositivos 
+moviles.
+Como lo solucionamos ? Usando Object Pooling , en resumen object pooling es un metodo que se 
+basa en crear lo objetos necesarios y tenerlos desactivados en espera a ser usados , cuando ya no
+se necesiten se desactivan y vuelven a esperar dentro de la Pool.
+
+-->Prepara tus archivos
+
+1.Crea un objeto nuevo , este sera el padre de nuestro objetos de la Pool
+
+2.Agrega el Script Pooling dentro de el objeto creado.
+
+El script tiene una auto-referencia estatica por lo que podras utilizarlo desde
+cualquiera de tus script sin necesidad de obtenerlo como componente , solo llama a la 
+clase Pooling
+
+3.Configura los campos del script:
+	-En el campo "Prefab" agrega el objeto en cuestion , por ejemplo el prefab de tu bala
+	-En el campo "PoolingSize" indica el tamaño de la Pool , osea cuantos prefas tendras 
+	 en espera , si tus objetos se instancian de manera rapida una tras de otra , tendras
+	 que usar un tamaño mayor
+
+-->Utiliza object pooling
+
+Antes de comenzar a utilizar las funciones del script , debes remplazar aquellas llamadas 
+destructoras que haz colocado , por ejemplo tu bala se destruye al tocar un enemigo cambialo
+y solo desactiva la bala
+
+1.Utiliza Pooling.manager.Instantiate();
+
+Reemplaza todas las Instancias de bala que utilizes por esta funcion , lo que esta funcion hara sera 
+devolver una bala que este esperando en la Pool , cuando esta se desactive volvera a la pool y volver a 
+esperar a ser llamada , es tan simple como eso
+
+	//No
+		GameObject mibala = Instantiate(balaPrefab , ...);
+	//Si
+		GameObject miBala = pooling.manager.Instantiate();
+
+
+-->Informacion Extra : 
+Que pasa si la pooling se queda vacia ? Esto puede ocurrir por usar un tamaño de pooling demaciado
+pequeño , como mencione el tamaño depende de que tan rapido se instancien los objetos , en caso de
+que esto ocurra se enviara un mensaje de error. Para solucionarlo aumente el tamaño de la pooling desde
+el campo publico PoolingSize.
